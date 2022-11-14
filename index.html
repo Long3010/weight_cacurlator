@@ -49,7 +49,7 @@
       }
       .tdee_cacu button:hover {
         cursor: pointer;
-        background-color: #D0B8A8;
+        background-color: #d0b8a8;
       }
       input::-webkit-outer-spin-button,
       input::-webkit-inner-spin-button {
@@ -64,7 +64,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Weight Cacurlator</title>
+    <title>weight cacurlator</title>
   </head>
   <body>
     <table class="tdee_cacu">
@@ -91,8 +91,10 @@
           <label>Giới tính: </label>
         </td>
         <td>
-          <input type="radio" id="gioitinh1" name="gender" /> <label for="gioitinh1"> Nam</label>
-          <input type="radio" id="gioitinh2" name="gender"/> <label for="gioitinh2"> Nữ</label>
+          <input type="radio" id="gioitinh1" name="gender" />
+          <label for="gioitinh1"> Nam</label>
+          <input type="radio" id="gioitinh2" name="gender" />
+          <label for="gioitinh2"> Nữ</label>
         </td>
       </tr>
       <tr>
@@ -125,6 +127,26 @@
             id="tuoi"
             placeholder="Nhập Tuổi" />
           tuổi
+        </td>
+      </tr>
+      <tr>
+        <td><p>Chỉ số vận động:</p></td>
+        <td>
+          <select
+            name="R"
+            id="R"
+            style="
+              width: 200px;
+              height: 30px;
+              border: 1px solid #d0b8a8;
+              border-radius: 5px;
+            ">
+            <option value="1.2">Ít vận động</option>
+            <option value="1.375">Vận động nhẹ</option>
+            <option value="1.55">Vận động vừa phải</option>
+            <option value="1.725">Vận động nhiều</option>
+            <option value="1.9">Vận động nặng</option>
+          </select>
         </td>
       </tr>
       <tr>
@@ -174,7 +196,7 @@
       </tr>
       <tr>
         <td>
-          <p>Calo của Fat: </p>
+          <p>Calo của Fat:</p>
         </td>
         <td>
           <p class="kfat"></p>
@@ -190,7 +212,7 @@
       </tr>
       <tr>
         <td>
-          <p>Calo của Carb: </p>
+          <p>Calo của Carb:</p>
         </td>
         <td>
           <p class="kcarb"></p>
@@ -202,6 +224,8 @@
         cn = document.getElementById("cannang").value;
         h = document.getElementById("chieucao").value;
         age = document.getElementById("tuoi").value;
+        R = parseFloat(document.getElementById("R").value);
+        alert(R);
         var gioitinh = "";
         if (document.getElementById("gioitinh1").checked) {
           gioitinh = "nam";
@@ -217,28 +241,36 @@
           age < 100 &&
           cn < 150
         ) {
-          var tdee = 10 * cn + 6.5 * h - 5 * age;
+          var bms = 10 * cn + 6.5 * h - 5 * age;
           if (gioitinh == "nam") {
-            tdee = tdee + 5;
+            bms = bms + 5;
           } else {
-            tdee = tdee - 161;
+            bms = bms - 161;
           }
-          document.getElementsByClassName("tdee")[0].innerHTML = Math.round(tdee) + " kcal";
+          var tdee = bms * R;
+          document.getElementsByClassName("tdee")[0].innerHTML =
+            Math.round(tdee) + " kcal";
           cdg = tdee - 500;
-          document.getElementsByClassName("cdg")[0].innerHTML = Math.round(cdg) + " kcal";
+          document.getElementsByClassName("cdg")[0].innerHTML =
+            Math.round(cdg) + " kcal";
           pin = 2.6 * cn;
-          document.getElementsByClassName("pin")[0].innerHTML = Math.round(pin) + " g";
+          document.getElementsByClassName("pin")[0].innerHTML =
+            Math.round(pin) + " g";
           pkcal = pin * 4;
-          document.getElementsByClassName("pkcal")[0].innerHTML =Math.round(pkcal)  + " kcal";
+          document.getElementsByClassName("pkcal")[0].innerHTML =
+            Math.round(pkcal) + " kcal";
           fat = (cdg - pkcal) / 15;
-          document.getElementsByClassName("fat")[0].innerHTML = Math.round(fat) + " g";
-          kfat=fat*9
-          document.getElementsByClassName("kfat")[0].innerHTML = Math.round(kfat) + " kcal";
+          document.getElementsByClassName("fat")[0].innerHTML =
+            Math.round(fat) + " g";
+          kfat = fat * 9;
+          document.getElementsByClassName("kfat")[0].innerHTML =
+            Math.round(kfat) + " kcal";
           carb = 1.5 * fat;
-          document.getElementsByClassName("carb")[0].innerHTML = Math.round(carb) + " g";
-          kcarb=4*carb
-          document.getElementsByClassName("kcarb")[0].innerHTML = Math.round(kcarb) + " kcal";
-
+          document.getElementsByClassName("carb")[0].innerHTML =
+            Math.round(carb) + " g";
+          kcarb = 4 * carb;
+          document.getElementsByClassName("kcarb")[0].innerHTML =
+            Math.round(kcarb) + " kcal";
         } else {
           alert("Bạn đã nhập sai cú pháp vui lòng nhập lại");
           location.reload(true);
