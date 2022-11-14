@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        font-family: "Times New Roman", Times, serif;
+        background-color: #f8ede3;
+        font-size: medium;
+        color: #7d6e83;
+      }
+      .inp {
+        border: 1px solid #7d6e83;
+        width: 70%;
+        height: 30px;
+        padding: 5px;
+        border-radius: 5px;
+      }
+      .tdee_cacu {
+        width: 500px;
+        margin: 100px 200px;
+      }
+      .tdee_cacu th {
+        font-size: 20px;
+      }
+      .tdee_cacu tr,
+      td,
+      th {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        padding: 5px;
+      }
+      .tdee_cacu td {
+        border: 1px solid;
+        border-collapse: collapse;
+        background-color: #dfd3c3;
+        text-align: center;
+      }
+      .tdee_cacu button {
+        border: 1px #d0b8a8 solid;
+        border-radius: 5px;
+        font-size: 18px;
+        width: 120px;
+        height: 40px;
+      }
+      .tdee_cacu button:hover {
+        cursor: pointer;
+        background-color: #D0B8A8;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <table class="tdee_cacu">
+      <tr>
+        <th colspan="2">Bảng tính toán trọng lượng tiêu thụ trong 1 ngày</th>
+      </tr>
+      <tr>
+        <td>
+          <label for="cannang">Cân nặng: </label>
+        </td>
+        <td>
+          <input
+            required
+            type="number"
+            min="0"
+            id="cannang"
+            class="inp"
+            placeholder="Nhập cân nặng" />
+          kg
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label>Giới tính: </label>
+        </td>
+        <td>
+          <input type="radio" id="gioitinh1" name="gender" /> <label for="gioitinh1"> Nam</label>
+          <input type="radio" id="gioitinh2" name="gender"/> <label for="gioitinh2"> Nữ</label>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="chieucao">Chiều cao: </label>
+        </td>
+        <td>
+          <input
+            required
+            type="number"
+            min="0"
+            name="height"
+            class="inp"
+            id="chieucao"
+            placeholder="Nhập chiều cao" />
+          cm
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="tuoi">Tuổi: </label>
+        </td>
+        <td>
+          <input
+            required
+            type="number"
+            min="0"
+            class="inp"
+            name="Age"
+            id="tuoi"
+            placeholder="Nhập Tuổi" />
+          tuổi
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="tdee()">Tính Tdee</button>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>IDEE:</p>
+        </td>
+        <td>
+          <p class="tdee awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Kcal 1 ngày để giảm cân:</p>
+        </td>
+        <td>
+          <p class="cdg awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Khối Lượng Protein:</p>
+        </td>
+        <td>
+          <p class="pin awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Calo Protein:</p>
+        </td>
+        <td>
+          <p class="pkcal awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Khối Lượng Fat:</p>
+        </td>
+        <td>
+          <p class="fat awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Calo của Fat: </p>
+        </td>
+        <td>
+          <p class="kfat"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Khối Lượng carb:</p>
+        </td>
+        <td>
+          <p class="carb awn"></p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>Calo của Carb: </p>
+        </td>
+        <td>
+          <p class="kcarb"></p>
+        </td>
+      </tr>
+    </table>
+    <script>
+      function tdee() {
+        cn = document.getElementById("cannang").value;
+        h = document.getElementById("chieucao").value;
+        age = document.getElementById("tuoi").value;
+        var gioitinh = "";
+        if (document.getElementById("gioitinh1").checked) {
+          gioitinh = "nam";
+        } else if (document.getElementById("gioitinh2").checked) {
+          gioitinh = "nu";
+        }
+        if (
+          gioitinh != "" &&
+          cn > 25 &&
+          h > 100 &&
+          h < 215 &&
+          age > 16 &&
+          age < 100 &&
+          cn < 150
+        ) {
+          var tdee = 10 * cn + 6.5 * h - 5 * age;
+          if (gioitinh == "nam") {
+            tdee = tdee + 5;
+          } else {
+            tdee = tdee - 161;
+          }
+          document.getElementsByClassName("tdee")[0].innerHTML = Math.round(tdee) + " kcal";
+          cdg = tdee - 500;
+          document.getElementsByClassName("cdg")[0].innerHTML = Math.round(cdg) + " kcal";
+          pin = 2.6 * cn;
+          document.getElementsByClassName("pin")[0].innerHTML = Math.round(pin) + " g";
+          pkcal = pin * 4;
+          document.getElementsByClassName("pkcal")[0].innerHTML =Math.round(pkcal)  + " kcal";
+          fat = (cdg - pkcal) / 15;
+          document.getElementsByClassName("fat")[0].innerHTML = Math.round(fat) + " g";
+          kfat=fat*9
+          document.getElementsByClassName("kfat")[0].innerHTML = Math.round(kfat) + " kcal";
+          carb = 1.5 * fat;
+          document.getElementsByClassName("carb")[0].innerHTML = Math.round(carb) + " g";
+          kcarb=4*carb
+          document.getElementsByClassName("kcarb")[0].innerHTML = Math.round(kcarb) + " kcal";
+
+        } else {
+          alert("Bạn đã nhập sai cú pháp vui lòng nhập lại");
+          location.reload(true);
+        }
+      }
+    </script>
+  </body>
+</html>
